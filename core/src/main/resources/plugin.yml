@@ -1,0 +1,11 @@
+name: BlockEngine
+version: '${project.version}'
+main: com.mira.blockengine.BlockEngine
+api-version: '1.17'
+depend: [ProtocolLib]
+
+commands:
+  blockengine:
+    description: The core command to the plugin
+    aliases: [be, beg]
+    permission: blockengine.admin
