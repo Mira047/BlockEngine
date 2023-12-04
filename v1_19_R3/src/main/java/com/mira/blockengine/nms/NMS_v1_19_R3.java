@@ -11,6 +11,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
+import org.bukkit.craftbukkit.v1_19_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_19_R3.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
@@ -47,24 +49,25 @@ public class NMS_v1_19_R3 implements NMS {
 
         nmsItem.useOn(
                 new UseOnContext(
-                        human.level(),
+                        human.level,
                         human,
                         enumHand,
                         nmsItem,
                         blockHitResult
-                )
+                ),
+                enumHand
         );
 
         // update item
         player.getInventory().setItemInMainHand(CraftItemStack.asBukkitCopy(nmsItem));
 
         // Get sound effect of the used item
-        BlockState blockState = human.level().getBlockState(blockPosition);
+        BlockState blockState = human.level.getBlockState(blockPosition);
 
         net.minecraft.world.level.block.Block nmsBlock = blockState.getBlock();
 
         SoundEvent soundEffect = nmsBlock.getSoundType(blockState).getPlaceSound();
 
-        human.level().playSound(null, blockPosition, soundEffect, net.minecraft.sounds.SoundSource.BLOCKS, nmsBlock.getSoundType(blockState).getVolume() * 0.5F, nmsBlock.getSoundType(blockState).getPitch() * 0.75F);
+        human.level.playSound(null, blockPosition, soundEffect, net.minecraft.sounds.SoundSource.BLOCKS, nmsBlock.getSoundType(blockState).getVolume() * 0.5F, nmsBlock.getSoundType(blockState).getPitch() * 0.75F);
     }
 }
